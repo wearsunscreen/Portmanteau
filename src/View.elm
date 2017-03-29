@@ -1,5 +1,6 @@
 module View exposing (..)
 
+import Data exposing (getDefinition, getWord)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
@@ -48,11 +49,18 @@ viewStuff model =
     in
         div []
             [ p []
-                [ text "Start time is "
-                , text time
+                [ h1 [] [ text "What is the portmanteau meaning: " ]
                 ]
             , p []
-                [ text "Your psuedo random number is  "
-                , text seed
+                [ h1 [] [ text <| Data.getDefinition model.question ?? (" error: malformed data at index " ++ (toString model.question)) ]
+                ]
+            , p []
+                [ h2 [] [ text <| Data.getHint model.question 0 ?? (" error: malformed data at index " ++ (toString model.question)) ]
+                ]
+            , p []
+                [ h2 [] [ text <| Data.getHint model.question 1 ?? (" error: malformed data at index " ++ (toString model.question)) ]
+                ]
+            , p []
+                [ h1 [] [ text <| Data.getWord model.question ?? " error: bad index " ]
                 ]
             ]

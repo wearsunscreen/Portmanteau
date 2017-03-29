@@ -8,7 +8,7 @@ import Time exposing (now)
 
 init : ( Model, Cmd Msg )
 init =
-    ( Model Nothing Nothing, Cmd.none )
+    ( Model Nothing Nothing 0, Cmd.none )
 
 
 subs : Model -> Sub Msg
