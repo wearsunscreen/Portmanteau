@@ -1,5 +1,6 @@
 module Update exposing (..)
 
+import Data exposing (nextQuestion)
 import Model exposing (..)
 import Random exposing (Seed, initialSeed)
 import Task exposing (Task, perform)
@@ -24,7 +25,7 @@ update msg model =
 
         NextQuestion ->
             ( { model
-                | question = model.question + 1
+                | question = nextQuestion model.question
                 , showHint1 = False
                 , showHint2 = False
                 , showPortmanteau = False

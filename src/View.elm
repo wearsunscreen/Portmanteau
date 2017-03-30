@@ -9,6 +9,40 @@ import Random exposing (Seed, int, maxInt, minInt, step)
 import String exposing (repeat)
 
 
+aStyle =
+    [ style
+        [ ( "position", "absolute" )
+        , ( "font-size", "100%" )
+        , ( "top", "50px" )
+        , ( "left", "100px" )
+        ]
+    ]
+
+
+checkbox : msg -> String -> Bool -> Html msg
+checkbox msg name isChecked =
+    label
+        [ style [ ( "padding", "20px" ) ]
+        ]
+        [ input [ type_ "checkbox", checked isChecked, onClick msg ] []
+        , text name
+        ]
+
+
+fromHumpty =
+    """\x0D\x0D\x0D\x0D\x0D\x0D
+"Well, 'slithy' means lithe and slimy'... You see, it's like a portmanteau - there are two meanings packed up into one word."\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D
+"""
+
+
+showHide : Bool -> String -> String
+showHide b s =
+    if b then
+        s
+    else
+        repeat (String.length s) "*"
+
+
 view : Model -> Html Msg
 view model =
     case model.startTime of
@@ -17,12 +51,6 @@ view model =
 
         Just t ->
             viewStuff model
-
-
-fromHumpty =
-    """\x0D\x0D
-"Well, 'slithy' means lithe and slimy'... You see, it's like a portmanteau - there are two meanings packed up into one word."\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D
-"""
 
 
 viewWelcome : Model -> Html Msg
@@ -82,31 +110,3 @@ viewStuff model =
                 [ h1 [] [ text <| showHide model.showPortmanteau <| getWord model.question ]
                 ]
             ]
-
-
-showHide : Bool -> String -> String
-showHide b s =
-    if b then
-        s
-    else
-        repeat (String.length s) "*"
-
-
-checkbox : msg -> String -> Bool -> Html msg
-checkbox msg name isChecked =
-    label
-        [ style [ ( "padding", "20px" ) ]
-        ]
-        [ input [ type_ "checkbox", checked isChecked, onClick msg ] []
-        , text name
-        ]
-
-
-aStyle =
-    [ style
-        [ ( "position", "absolute" )
-        , ( "font-size", "100%" )
-        , ( "top", "50px" )
-        , ( "left", "100px" )
-        ]
-    ]
