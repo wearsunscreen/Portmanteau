@@ -9,16 +9,6 @@ import Random exposing (Seed, int, maxInt, minInt, step)
 import String exposing (repeat)
 
 
-aStyle =
-    [ style
-        [ ( "position", "absolute" )
-        , ( "font-size", "100%" )
-        , ( "top", "50px" )
-        , ( "left", "100px" )
-        ]
-    ]
-
-
 checkbox : msg -> String -> Bool -> Html msg
 checkbox msg name isChecked =
     label
@@ -30,9 +20,7 @@ checkbox msg name isChecked =
 
 
 fromHumpty =
-    """\x0D\x0D\x0D\x0D\x0D\x0D
-"Well, 'slithy' means lithe and slimy'... You see, it's like a portmanteau - there are two meanings packed up into one word."\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D
-"""
+    "\"Well, 'slithy' means lithe and slimy'... You see, it's like a portmanteau - there are two meanings packed up into one word.\""
 
 
 showHide : Bool -> String -> String
@@ -41,6 +29,31 @@ showHide b s =
         s
     else
         repeat (String.length s) "*"
+
+
+styleBase =
+    [ style
+        [ ( "position", "absolute" )
+        , ( "font-size", "100%" )
+        , ( "top", "50px" )
+        , ( "right", "50px" )
+        , ( "left", "100px" )
+        , ( "text-align", "center" )
+        , ( "background-color", "MediumTurquoise" )
+        , ( "border-radius", "25px" )
+        ]
+    ]
+
+
+styleHint b =
+    if b then
+        [ style
+            [ ( "background-color", "Bisque" )
+            , ( "border-radius", "10px" )
+            ]
+        ]
+    else
+        []
 
 
 view : Model -> Html Msg
@@ -56,11 +69,13 @@ view model =
 viewWelcome : Model -> Html Msg
 viewWelcome model =
     div []
-        [ p aStyle
+        [ p styleBase
             [ h1 [] [ text "Portmanteau!" ]
-            , p [] [ text fromHumpty ]
-            , p [] [ text "- Humpty Dumpty" ]
-            , p [] [ text "- Though the Looking-Glass, 1871, Lewis Carroll" ]
+            , div [ style [ ( "font-style", "italic" ) ] ]
+                [ h2 [] [ text fromHumpty ]
+                , h2 [] [ text "- Humpty Dumpty" ]
+                , h2 [] [ text "- Though the Looking-Glass, 1871, Lewis Carroll" ]
+                ]
             , button [ onClick CloseWelcomeScreen ] [ text "Ok" ]
             ]
         ]
@@ -87,9 +102,10 @@ viewStuff model =
                 Just t ->
                     toString t
     in
-        div aStyle
+        div styleBase
             [ fieldset []
-                [ checkbox ToggleHint1 "Show Hint 1" model.showHint1
+                [ p [] []
+                , checkbox ToggleHint1 "Show Hint 1" model.showHint1
                 , checkbox ToggleHint2 "Show Hint 2" model.showHint2
                 , checkbox TogglePortmanteau "Show Answer" model.showPortmanteau
                 , button [ onClick NextQuestion ] [ text "Next" ]
@@ -98,15 +114,21 @@ viewStuff model =
                 [ h2 [] [ text "What is the portmanteau meaning: " ]
                 ]
             , p []
-                [ h1 [] [ text <| getDefinition model.question ]
+                [ h1 [ style [ ( "background-color", "Khaki" ) ] ] [ text <| getDefinition model.question ]
                 ]
             , p []
-                [ h3 [] [ text <| showHide model.showHint1 <| getHint model.question 0 ]
+                [ h3 (styleHint model.showHint1) [ text <| showHide model.showHint1 <| getHint model.question 0 ]
                 ]
             , p []
-                [ h3 [] [ text <| showHide model.showHint2 <| getHint model.question 1 ]
+                [ h3 (styleHint model.showHint2) [ text <| showHide model.showHint2 <| getHint model.question 1 ]
                 ]
             , p []
-                [ h1 [] [ text <| showHide model.showPortmanteau <| getWord model.question ]
+                [ h1
+                    [ style
+                        [ ( "background-color", "DarkSlate2" )
+                        , ( "font-size", "400%" )
+                        ]
+                    ]
+                    [ text <| showHide model.showPortmanteau <| getWord model.question ]
                 ]
             ]
