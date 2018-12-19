@@ -107,7 +107,7 @@ viewStuff model =
                     posixToMillis t |> fromInt
     in
     div styleBase
-        [ fieldset []
+        [ fieldset [ style "border" "0" ]
             [ p [] []
             , checkbox ToggleHint1 "Show Hint 1" model.showHint1
             , checkbox ToggleHint2 "Show Hint 2" model.showHint2
