@@ -2,12 +2,12 @@ module Model exposing (..)
 
 import Maybe exposing (Maybe)
 import Random exposing (Seed)
-import Time exposing (Time)
+import Time exposing (Posix)
 
 
 type alias Model =
     { randomSeed : Maybe Seed
-    , startTime : Maybe Time
+    , startTime : Maybe Posix
     , question : Int
     , showHint1 : Bool
     , showHint2 : Bool
@@ -18,17 +18,13 @@ type alias Model =
 type Msg
     = CloseWelcomeScreen
     | NextQuestion
-    | StartApp Time
+    | StartApp Posix
     | ToggleHint1
     | ToggleHint2
     | TogglePortmanteau
 
-
-(??) : Maybe a -> a -> a
-(??) maybe default =
-    case maybe of
-        Just x ->
-            x
-
-        Nothing ->
-            default
+{- handy utility function
+-}
+justOrDefault : Maybe a -> a -> a
+justOrDefault maybe default =
+    Maybe.withDefault default maybe

@@ -6,13 +6,14 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
 import Model exposing (..)
 import Random exposing (Seed, int, maxInt, minInt, step)
-import String exposing (repeat)
+import String exposing (fromInt, repeat)
+import Time exposing (posixToMillis)
 
 
 checkbox : msg -> String -> Bool -> Html msg
 checkbox msg name isChecked =
     label
-        [ style [ ( "padding", "20px" ) ]
+        [ style "padding" "20px"
         ]
         [ input [ type_ "checkbox", checked isChecked, onClick msg ] []
         , text name
@@ -32,25 +33,21 @@ showHide b s =
 
 
 styleBase =
-    [ style
-        [ ( "position", "absolute" )
-        , ( "font-size", "100%" )
-        , ( "top", "50px" )
-        , ( "right", "50px" )
-        , ( "left", "100px" )
-        , ( "text-align", "center" )
-        , ( "background-color", "MediumTurquoise" )
-        , ( "border-radius", "25px" )
+        [ style "position" "absolute" 
+        , style "font-size" "100%" 
+        , style "top" "50px" 
+        , style "right" "50px" 
+        , style "left" "100px" 
+        , style "text-align" "center" 
+        , style "background-color" "MediumTurquoise" 
+        , style "border-radius" "25px" 
         ]
-    ]
 
 
 styleHint b =
     if b then
-        [ style
-            [ ( "background-color", "Bisque" )
-            , ( "border-radius", "10px" )
-            ]
+        [ style "background-color" "Bisque" 
+        , style "border-radius" "10px" 
         ]
     else
         []
@@ -71,7 +68,7 @@ viewWelcome model =
     div []
         [ p styleBase
             [ h1 [] [ text "Portmanteau!" ]
-            , div [ style [ ( "font-style", "italic" ) ] ]
+            , div [ style "font-style" "italic" ]
                 [ h2 [] [ text fromHumpty ]
                 , h2 [] [ text "- Humpty Dumpty" ]
                 , h2 [] [ text "- Though the Looking-Glass, 1871, Lewis Carroll" ]
@@ -92,7 +89,7 @@ viewStuff model =
                 Just s ->
                     Random.step (int minInt maxInt) s
                         |> Tuple.first
-                        |> toString
+                        |> fromInt
 
         time =
             case model.startTime of
@@ -100,7 +97,7 @@ viewStuff model =
                     "unknown"
 
                 Just t ->
-                    toString t
+                    posixToMillis t |> fromInt
     in
         div styleBase
             [ fieldset []
@@ -114,7 +111,7 @@ viewStuff model =
                 [ h2 [] [ text "What is the portmanteau meaning: " ]
                 ]
             , p []
-                [ h1 [ style [ ( "background-color", "Khaki" ) ] ] [ text <| getDefinition model.question ]
+                [ h1 [ style "background-color" "Khaki"] [ text <| getDefinition model.question ]
                 ]
             , p []
                 [ h3 (styleHint model.showHint1) [ text <| showHide model.showHint1 <| getHint model.question 0 ]
@@ -124,10 +121,8 @@ viewStuff model =
                 ]
             , p []
                 [ h1
-                    [ style
-                        [ ( "background-color", "DarkSlate2" )
-                        , ( "font-size", "400%" )
-                        ]
+                    [ style "background-color" "DarkSlate2" 
+                    , style "font-size" "400%" 
                     ]
                     [ text <| showHide model.showPortmanteau <| getWord model.question ]
                 ]

@@ -1,11 +1,11 @@
 module Data exposing (getDefinition, getHint, getNumWords, getWord, nextQuestion)
 
 import List exposing (drop, head, length, take)
-import List.Extra exposing ((!!), getAt)
+import List.Extra exposing (getAt)
 import Maybe exposing (withDefault)
-import Model exposing ((??))
+import Model exposing (justOrDefault)
 import Result exposing (Result)
-import String exposing (repeat, split, trim)
+import String exposing (fromInt, repeat, split, trim)
 
 
 {-|
@@ -46,9 +46,9 @@ getHint n hint =
 -}
 getLine : Int -> Result String String
 getLine n =
-    case (rawData !! n) of
+    case (getAt n rawData) of
         Nothing ->
-            Err ("error:invalid-index of " ++ (toString n))
+            Err ("error:invalid-index of " ++ (fromInt n))
 
         Just x ->
             Ok x
@@ -70,19 +70,19 @@ getWord n =
         Ok s ->
             split "$" s
                 |> getAt 0
-                |> withDefault ("error: malformed data at index " ++ (toString n))
+                |> withDefault ("error: malformed data at index " ++ (fromInt n))
                 |> trim
 
 
 malformedErrorMessage : Int -> String
 malformedErrorMessage n =
-    "error: malformed data at index " ++ (toString n)
+    "error: malformed data at index " ++ (fromInt n)
 
 
 nextQuestion : Int -> Int
 nextQuestion n =
-    (n + 1) % length rawData
-
+    modBy (n + 1) (length rawData)
+    
 
 rawData =
     [ "telethon $television/marathon$:A very long television program, often to raise money"

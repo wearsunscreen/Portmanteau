@@ -4,7 +4,7 @@ import Data exposing (nextQuestion)
 import Model exposing (..)
 import Random exposing (Seed, initialSeed)
 import Task exposing (Task, perform)
-import Time exposing (now)
+import Time exposing (now, posixToMillis)
 
 
 init : ( Model, Cmd Msg )
@@ -21,7 +21,7 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         CloseWelcomeScreen ->
-            model ! [ Task.perform StartApp Time.now ]
+            ( model, Task.perform StartApp Time.now )
 
         NextQuestion ->
             ( { model
@@ -36,7 +36,7 @@ update msg model =
         StartApp time ->
             ( { model
                 | startTime = Just time
-                , randomSeed = Just (initialSeed (truncate time * 1000))
+                , randomSeed = Just (initialSeed (posixToMillis time))
               }
             , Cmd.none
             )
