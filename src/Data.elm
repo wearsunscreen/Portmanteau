@@ -9,8 +9,10 @@ import String exposing (fromInt, repeat, split, trim)
 
 
 {-|
+
     Get the definition from the source data.
     If this returns "nothing, then probably the source data is malformed
+
 -}
 getDefinition : Int -> String
 getDefinition n =
@@ -35,9 +37,9 @@ getHint n hint =
         Ok s ->
             split "$" s
                 |> getAt 1
-                |> withDefault ((malformedErrorMessage 2) ++ "/" ++ (malformedErrorMessage n))
+                |> withDefault (malformedErrorMessage 2 ++ "/" ++ malformedErrorMessage n)
                 |> split "/"
-                |> getAt (hint)
+                |> getAt hint
                 |> withDefault (malformedErrorMessage n)
                 |> trim
 
@@ -46,9 +48,9 @@ getHint n hint =
 -}
 getLine : Int -> Result String String
 getLine n =
-    case (getAt n rawData) of
+    case getAt n rawData of
         Nothing ->
-            Err ("error:invalid-index of " ++ (fromInt n))
+            Err ("error:invalid-index of " ++ fromInt n)
 
         Just x ->
             Ok x
@@ -70,19 +72,19 @@ getWord n =
         Ok s ->
             split "$" s
                 |> getAt 0
-                |> withDefault ("error: malformed data at index " ++ (fromInt n))
+                |> withDefault ("error: malformed data at index " ++ fromInt n)
                 |> trim
 
 
 malformedErrorMessage : Int -> String
 malformedErrorMessage n =
-    "error: malformed data at index " ++ (fromInt n)
+    "error: malformed data at index " ++ fromInt n
 
 
 nextQuestion : Int -> Int
 nextQuestion n =
-    modBy (n + 1) (length rawData)
-    
+    modBy (length rawData) (n + 1)
+
 
 rawData =
     [ "telethon $television/marathon$:A very long television program, often to raise money"

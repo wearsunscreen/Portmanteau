@@ -1,4 +1,4 @@
-module Model exposing (..)
+module Model exposing (Model, Msg(..), justOrDefault)
 
 import Maybe exposing (Maybe)
 import Random exposing (Seed)
@@ -23,8 +23,11 @@ type Msg
     | ToggleHint2
     | TogglePortmanteau
 
-{- handy utility function
--}
+
+
+{- handy utility function -}
+
+
 justOrDefault : Maybe a -> a -> a
 justOrDefault maybe default =
     Maybe.withDefault default maybe

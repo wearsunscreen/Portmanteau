@@ -1,4 +1,4 @@
-module Update exposing (..)
+module Update exposing (init, subs, update)
 
 import Data exposing (nextQuestion)
 import Model exposing (..)
@@ -7,8 +7,8 @@ import Task exposing (Task, perform)
 import Time exposing (now, posixToMillis)
 
 
-init : ( Model, Cmd Msg )
-init =
+init : () -> ( Model, Cmd Msg )
+init model =
     ( Model Nothing Nothing 0 False False False, Cmd.none )
 
 
