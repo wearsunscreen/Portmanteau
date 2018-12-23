@@ -24,10 +24,8 @@ type Msg
     | TogglePortmanteau
 
 
-
-{- handy utility function -}
-
-
+{-| handy utility function
+-}
 justOrDefault : Maybe a -> a -> a
 justOrDefault maybe default =
     Maybe.withDefault default maybe

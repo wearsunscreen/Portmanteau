@@ -8,11 +8,8 @@ import Result exposing (Result)
 import String exposing (fromInt, repeat, split, trim)
 
 
-{-|
-
-    Get the definition from the source data.
-    If this returns "nothing, then probably the source data is malformed
-
+{-| Get the definition from the source data.
+If this returns "nothing, then probably the source data is malformed
 -}
 getDefinition : Int -> String
 getDefinition n =
@@ -56,6 +53,8 @@ getLine n =
             Ok x
 
 
+{-| How many portmanteaus do we have in the quiz?
+-}
 getNumWords : Int
 getNumWords =
     length rawData

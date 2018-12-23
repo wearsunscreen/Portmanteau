@@ -6,6 +6,12 @@ import Update exposing (subs, update)
 import View exposing (view)
 
 
+
+{- To do
+   - unit tests
+-}
+
+
 main : Program () Model Msg
 main =
     Browser.document

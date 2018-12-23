@@ -1,2 +1,5 @@
-# Portmaneau
-A quiz of portmanteau words
+# Portmanteau
+A quiz of portmanteaus
+
+![](/snapshot.png)
+

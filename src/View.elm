@@ -1,4 +1,4 @@
-module View exposing (checkbox, fromHumpty, showHide, styleBase, styleHint, view, viewStuff, viewWelcome)
+module View exposing (view)
 
 import Browser exposing (Document)
 import Data exposing (getDefinition, getHint, getWord)
